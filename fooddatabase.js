@@ -162,6 +162,58 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginBottom: 10,
   },
+  
+  foodItem: {
+    borderWidth: 1,
+    borderColor: '#008000',
+    padding: 10,
+    marginBottom: 10,
+  },
+  foodName: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#008000',
+  },
+  calorieContent: {
+    fontSize: 14,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 10,
+    width: '80%',
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  modalLabel: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginTop: 10,
+  },
+  modalInput: {
+    height: 40,
+    borderColor: '#008000',
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    marginBottom: 10,
+  },
+  modalButtonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10,
+  },
+  buttonSpacing: {
+    width: 10,
+  },
 });
 
 export default FoodDatabaseScreen;
