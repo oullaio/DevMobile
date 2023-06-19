@@ -75,4 +75,28 @@ const FoodDatabaseScreen = () => {
       setModalVisible(false);
     }
   };
+  return (
+    <View style={styles.container}>
+      <Text style={styles.heading}>Food Database</Text>
+      <TextInput
+        style={styles.input}
+        value={searchQuery}
+        onChangeText={setSearchQuery}
+        placeholder="Search for a food..."
+      />
+      <View style={styles.buttonContainer}>
+        <Button title="Search" onPress={handleSearch} color="#32CD32" />
+      </View>
+      {foodInfo && (
+
+        // TouchableOpacity qui nous permet d'appuyer sur le résultat de la nourriture entrée dans le champ de texte afin de faire apparaître la fenêtre donnant plus de détails
+        <TouchableOpacity onPress={() => handleFoodSelection(foodInfo)} style={styles.foodItem}>
+          <Text style={[styles.foodName, {color: '#008000'}]}>Food Name: {foodInfo.name}</Text>
+          <Text style={styles.calorieContent}>Calorie Content: {foodInfo.calories} kcal</Text>
+        </TouchableOpacity>
+      )}
+
+      
+    </View>
+  );
 };
