@@ -96,7 +96,44 @@ const FoodDatabaseScreen = () => {
         </TouchableOpacity>
       )}
 
+      {/* Modal qui devient visible en faisant une animation de slide et en rendant transparent le fond de l'application */}
+      <Modal visible={modalVisible} animationType="slide" transparent={true}>
       
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={[styles.modalTitle, {color: '#008000'}]}>Add to Meal Plan</Text>
+            <Text style={styles.modalLabel}>Food : {selectedFood?.name}</Text>
+            <Text style={[styles.modalLabel, {color: '#008000'}]}>Quantity :</Text>
+            <TextInput
+              style={styles.modalInput}
+              value={quantity}
+              onChangeText={setQuantity}
+              placeholder="Enter quantity..."
+              keyboardType="numeric"
+            />
+            <Text style={styles.modalLabel}>Meal Type :</Text>
+
+            {/* Le picker permettant de choisir pour quel repas on met la nourriture entrée dans le champ de texte */}
+            <Picker
+              style={styles.modalInput}
+              selectedValue={selectedMeal}
+              onValueChange={itemValue => setSelectedMeal(itemValue)}
+            >
+              <Picker.Item label="Breakfast" value="Breakfast" />
+              <Picker.Item label="Lunch" value="Lunch" />
+              <Picker.Item label="Dinner" value="Dinner" />
+              <Picker.Item label="Snack" value="Snack" />
+            </Picker>
+            <View style={styles.modalButtonContainer}>
+
+            {/* Les boutons permettant d'ajouter la nourriture ou d'annuler ce qui a été fait */}
+              <Button title="Add to Meal Plan" onPress={handleAddToMealPlan} color="#32CD32" />
+              <View style={styles.buttonSpacing} />
+              <Button title="Cancel" onPress={() => setModalVisible(false)} color="#32CD32" />
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
