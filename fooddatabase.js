@@ -145,6 +145,23 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#f0fff0',
   },
+  
+  heading: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: '#008000',
+  },
+  input: {
+    height: 40,
+    borderColor: '#008000',
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    marginBottom: 10,
+  },
+  buttonContainer: {
+    marginBottom: 10,
+  },
 });
 
 export default FoodDatabaseScreen;
