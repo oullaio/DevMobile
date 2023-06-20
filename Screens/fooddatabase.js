@@ -1,14 +1,6 @@
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  Button,
-  StyleSheet,
-  TouchableOpacity,
-  Modal,
-  Picker,
-} from "react-native";
+import React, { useState } from 'react';
+import {Picker} from '@react-native-picker/picker';
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Modal, ScrollView } from 'react-native';
 
 const FoodDatabaseScreen = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -17,8 +9,45 @@ const FoodDatabaseScreen = () => {
   const [quantity, setQuantity] = useState("");
   const [selectedMeal, setSelectedMeal] = useState("Breakfast");
   const [modalVisible, setModalVisible] = useState(false);
+  const [selectedDay, setSelectedDay] = useState('Monday');
   const [mealPlan, setMealPlan] = useState({
-    Day: {
+    Monday: {
+      Breakfast: [],
+      Lunch: [],
+      Snack: [],
+      Dinner: [],
+    },
+    Tuesday: {
+      Breakfast: [],
+      Lunch: [],
+      Snack: [],
+      Dinner: [],
+    },
+    Wednesday: {
+      Breakfast: [],
+      Lunch: [],
+      Snack: [],
+      Dinner: [],
+    },
+    Thursday: {
+      Breakfast: [],
+      Lunch: [],
+      Snack: [],
+      Dinner: [],
+    },
+    Friday: {
+      Breakfast: [],
+      Lunch: [],
+      Snack: [],
+      Dinner: [],
+    },
+    Saturday: {
+      Breakfast: [],
+      Lunch: [],
+      Snack: [],
+      Dinner: [],
+    },
+    Sunday: {
       Breakfast: [],
       Lunch: [],
       Snack: [],
@@ -64,82 +93,103 @@ const FoodDatabaseScreen = () => {
     setSelectedFood(food);
     setModalVisible(true);
   };
-
   const handleAddToMealPlan = () => {
+
     // Dans la fenêtre, on peut renseigner la quantité de la nourriture, le repas pour lequel cette nourriture est mangée et on a la possibilité de l'ajouté dans le meal plan
-    if (selectedFood && quantity && selectedMeal) {
-      const updatedMealPlan = { ...mealPlan };
-      updatedMealPlan.Day[selectedMeal].push({ food: selectedFood, quantity });
-      setMealPlan(updatedMealPlan);
-      console.log("Meal Plan :", updatedMealPlan);
-      setModalVisible(false);
-    }
-  };
+    if (selectedFood && quantity && selectedMeal && selectedDay) {
+    const updatedMealPlan = { ...mealPlan };
+    updatedMealPlan[selectedDay][selectedMeal].push({ food: selectedFood, quantity });
+    setMealPlan(updatedMealPlan);
+    console.log('Meal Plan:', updatedMealPlan);
+    setModalVisible(false);
+  }
+ };
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>Food Database</Text>
-      <TextInput
-        style={styles.input}
-        value={searchQuery}
-        onChangeText={setSearchQuery}
-        placeholder="Search for a food..."
-      />
-      <View style={styles.buttonContainer}>
-        <Button title="Search" onPress={handleSearch} color="#32CD32" />
-      </View>
-      {foodInfo && (
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <View style={styles.container}>
+        <Text style={styles.heading}>Food Database</Text>
+        <TextInput
+          style={styles.input}
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+          placeholder="Search for a food..."
+        />
+        <View style={styles.buttonContainer}>
+          <Button title="Search" onPress={handleSearch} color="#32CD32" />
+        </View>
+        {foodInfo && (
 
-        // TouchableOpacity qui nous permet d'appuyer sur le résultat de la nourriture entrée dans le champ de texte afin de faire apparaître la fenêtre donnant plus de détails
-        <TouchableOpacity onPress={() => handleFoodSelection(foodInfo)} style={styles.foodItem}>
-          <Text style={[styles.foodName, {color: '#008000'}]}>Food Name: {foodInfo.name}</Text>
-          <Text style={styles.calorieContent}>Calorie Content: {foodInfo.calories} kcal</Text>
-        </TouchableOpacity>
-      )}
+          // TouchableOpacity qui nous permet d'appuyer sur le résultat de la nourriture entrée dans le champ de texte afin de faire apparaître la fenêtre donnant plus de détails
+          <TouchableOpacity onPress={() => handleFoodSelection(foodInfo)} style={styles.foodItem}>
+            <Text style={[styles.foodName, { color: '#008000' }]}>Food Name: {foodInfo.name}</Text>
+            <Text style={styles.calorieContent}>Calorie Content: {foodInfo.calories} kcal</Text>
+            <Text style={styles.calorieContent}>Serving Size: {foodInfo.serving_size_g} g</Text>
+          </TouchableOpacity>
+        )}
 
-      {/* Modal qui devient visible en faisant une animation de slide et en rendant transparent le fond de l'application */}
-      <Modal visible={modalVisible} animationType="slide" transparent={true}>
-      
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={[styles.modalTitle, {color: '#008000'}]}>Add to Meal Plan</Text>
-            <Text style={styles.modalLabel}>Food : {selectedFood?.name}</Text>
-            <Text style={[styles.modalLabel, {color: '#008000'}]}>Quantity :</Text>
-            <TextInput
+        {/* Modal qui devient visible en faisant une animation de slide et en rendant transparent le fond de l'application */}
+        <Modal visible={modalVisible} animationType="slide" transparent={true}>
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <Text style={[styles.modalTitle, { color: '#008000' }]}>Add to Meal Plan</Text>
+              <Text style={styles.modalLabel}>Food: {selectedFood?.name}</Text>
+              <Text style={[styles.modalLabel, { color: '#008000' }]}>Quantity:</Text>
+              <TextInput
               style={styles.modalInput}
               value={quantity}
               onChangeText={setQuantity}
               placeholder="Enter quantity..."
               keyboardType="numeric"
-            />
-            <Text style={styles.modalLabel}>Meal Type :</Text>
+              />
+              <Text style={styles.modalLabel}>Meal Type :</Text>
 
             {/* Le picker permettant de choisir pour quel repas on met la nourriture entrée dans le champ de texte */}
             <Picker
               style={styles.modalInput}
-              selectedValue={selectedMeal}
-              onValueChange={itemValue => setSelectedMeal(itemValue)}
-            >
-              <Picker.Item label="Breakfast" value="Breakfast" />
-              <Picker.Item label="Lunch" value="Lunch" />
-              <Picker.Item label="Dinner" value="Dinner" />
-              <Picker.Item label="Snack" value="Snack" />
-            </Picker>
-            <View style={styles.modalButtonContainer}>
+                selectedValue={selectedMeal}
+                onValueChange={itemValue => setSelectedMeal(itemValue)}
+              >
+                <Picker.Item label="Breakfast" value="Breakfast" />
+                <Picker.Item label="Lunch" value="Lunch" />
+                <Picker.Item label="Dinner" value="Dinner" />
+                <Picker.Item label="Snack" value="Snack" />
+              </Picker>
+              <Text style={styles.modalLabel}>Day:</Text>
+              <Picker
+                style={styles.modalInput}
+                selectedValue={selectedDay}
+                onValueChange={itemValue => setSelectedDay(itemValue)}
+              >
+                <Picker.Item label="Monday" value="Monday" />
+                <Picker.Item label="Tuesday" value="Tuesday" />
+                <Picker.Item label="Wednesday" value="Wednesday" />
+                <Picker.Item label="Thursday" value="Thursday" />
+                <Picker.Item label="Friday" value="Friday" />
+                <Picker.Item label="Saturday" value="Saturday" />
+                <Picker.Item label="Sunday" value="Sunday" />
+              </Picker>
+              <View style={styles.modalButtonContainer}>
 
-            {/* Les boutons permettant d'ajouter la nourriture ou d'annuler ce qui a été fait */}
-              <Button title="Add to Meal Plan" onPress={handleAddToMealPlan} color="#32CD32" />
-              <View style={styles.buttonSpacing} />
-              <Button title="Cancel" onPress={() => setModalVisible(false)} color="#32CD32" />
+                {/* Les boutons permettant d'ajouter la nourriture ou d'annuler ce qui a été fait */}
+                <Button title="Add to Meal Plan" onPress={handleAddToMealPlan} color="#32CD32" />
+                <View style={styles.buttonSpacing} />
+                <Button title="Cancel" onPress={() => setModalVisible(false)} color="#32CD32" />
+              </View>
             </View>
           </View>
-        </View>
-      </Modal>
-    </View>
+        </Modal>
+      </View>
+    </ScrollView>
   );
 };
 
 
 const styles = StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1,
+    backgroundColor: '#f0fff0',
+    paddingVertical: 20,
+  },
   container: {
     flex: 1,
     padding: 20,
