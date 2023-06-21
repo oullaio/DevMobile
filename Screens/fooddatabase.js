@@ -143,7 +143,9 @@ const FoodDatabaseScreen = () => {
           keyExtractor={(index) => index.toString()}
           renderItem={({ item }) => ( // Rend chaque élément de la list
             <View style={styles.mealPlanItem}>
-              <Text style={styles.mealPlanItemDay}>{item[0]}</Text> {/* Affiche le jour du Meal Plan */}
+
+              {/* Affiche le jour du Meal Plan */}
+              <Text style={styles.mealPlanItemDay}>{item[0]}</Text> 
               <View style={styles.mealPlanItemMealsContainer}>
                 {Object.entries(item[1]).map(([mealType, mealFoods]) => ( // Effectue une itération sur les repas de la journée
                   <View key={mealType} style={styles.mealPlanItemMealContainer}>
@@ -154,15 +156,18 @@ const FoodDatabaseScreen = () => {
                       renderItem={({ item, index }) => (
                         <View style={styles.mealPlanItemFoodContainer}>
                           <View style={styles.mealPlanItemFoodDetails}>
+                          
+                          {/* Ici, on affiche le nom de l'aliment et la quantité */}
                             <Text style={styles.mealPlanItemFood}>
-                              - {item.food.name} ({item.quantity}) {/* Ici, on affiche le nom de l'aliment et la quantité */}
+                              - {item.food.name} ({item.quantity}) 
                             </Text>
+                            
                           </View>
                           <TouchableOpacity
-                            onPress={() => handleRemoveFood(item.day, mealType, index)} // Appelle la méthode handleRemoveFood losqu'on clique sur la croix rouge
+                            onPress={() => handleRemoveFood(item.day, mealType, index)} // Appelle la méthode handleRemoveFood losqu'on clique sur la croix rouge puis l'affiche à côté de chaque aliment dans le Meal Plan
                             style={styles.removeIconContainer}
                           >
-                            <Icon name="close-circle-outline" size={24} color="red" /> {/* Affichage de la croix rouge à côté de chaque aliment dans le Meal Plan*/}
+                            <Icon name="close-circle-outline" size={24} color="red" />
                           </TouchableOpacity>
                         </View>
                       )}
@@ -176,11 +181,13 @@ const FoodDatabaseScreen = () => {
 
         {Object.entries(mealPlan).map(([day, meals]) => ( // Une autre itération sur l'objet Meal Plan
           <View key={day} style={styles.dayTotalContainer}>
-            <Text style={styles.dayTotalLabel}>{day} Total Calories:</Text>
+
+            {/* Calcul et affiche les calories totaux par jour en arrondissant le nombre à deux chiffres après la virgule */}
+         <Text style={styles.dayTotalLabel}>{day} Total Calories:</Text>
             <Text style={styles.dayTotalValue}>
-            {meals.Breakfast.concat(meals.Lunch, meals.Snack, meals.Dinner)
-        .reduce((totalCalories, meal) => totalCalories + meal.food.calories * meal.quantity, 0).toFixed(2)} {/* Calcul et affiche les calories totaux par jour en arrondissant le nombre à deux chiffres après la virgule */}
-      kcal
+              {meals.Breakfast.concat(meals.Lunch, meals.Snack, meals.Dinner)
+              .reduce((totalCalories, meal) => totalCalories + meal.food.calories * meal.quantity, 0).toFixed(2)} 
+              kcal
     </Text>
   </View>
 ))}
