@@ -21,5 +21,5 @@ Le langage utilisé pour l'application est le javascript.
 # Auteurs
 
 OULLAI Oussama @oullaio\
-ZHANG Hugo @HugoHZhang\
+ZHANG Hugo @HugoHLZhang\
 KHALFAOUI Loqman @loqmanKhalfaoui
