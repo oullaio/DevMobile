@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import FoodDatabaseScreen from '../Screens/fooddatabase';
-import FormComponent from '../Screens/HealthGoal';
+import HealthGoal from '../Screens/HealthGoal';
 import MealPlannerScreen from '../Screens/MealPlanner';
 
 const Tab = createBottomTabNavigator();
@@ -15,7 +15,7 @@ const Navigator = () => {
         <Tab.Navigator>
           <Tab.Screen
             name="Health Goals"
-            component={FormComponent}
+            component={HealthGoal}
             options={{
               tabBarIcon: ({ color, size }) => <Icon name="fitness-outline" color={color} size={size} />,
             }}

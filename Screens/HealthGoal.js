@@ -4,7 +4,7 @@ import { Picker } from '@react-native-picker/picker';
 
 
 // Déclaration des données à rentrer dans l'application par l'utilisateur
-const FormComponent = () => {
+const HealthGoal = () => {
 
   //useState utilisé pour affecter la valeur choisie ou rentrée pour chaque données demandées
   const [age, setAge] = useState('');
@@ -29,7 +29,7 @@ const FormComponent = () => {
 
       let caloriesIntake = truebmr;
 
-      switch(healthGoal){
+      switch(healthGoal){ // Un switch pour faciliter les différents cas de figure
 
         case 'weight loss':
           caloriesIntake -= truebmr*0.1;
@@ -69,7 +69,7 @@ const FormComponent = () => {
 
     let truebmr = 0;
 
-    switch (activityLevel){
+    switch (activityLevel){ // Un switch ici aussi qui nous facilite la vie
 
       case 'sedentary':
         truebmr = bmr*1.2;
@@ -119,6 +119,8 @@ const FormComponent = () => {
 
         <View style={styles.formGroup}>
           <Text style={styles.label}>Gender:</Text>
+
+          {/* Picker pour sélectionner le genre de la personne */}
           <Picker
             selectedValue={gender}
             onValueChange={setGender}
@@ -154,6 +156,8 @@ const FormComponent = () => {
 
         <View style={styles.formGroup}>
           <Text style={styles.label}>Activity Level:</Text>
+
+          {/* Picker pour sélectionner notre activité physique hebdomadaire */}
           <Picker
             selectedValue={activityLevel}
             onValueChange={setActivityLevel}
@@ -175,6 +179,7 @@ const FormComponent = () => {
             onValueChange={setHealthGoal}
             style={styles.input}
           >
+            {/* Picker pour sélectionner le but qu'on souhaite atteindre */}
             <Picker.Item label="Select your health goal..." />
             <Picker.Item label="Weight Loss" value="weight loss" />
             <Picker.Item label="Weight Maintenance" value="weight maintenance" />
@@ -246,4 +251,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FormComponent;
+export default HealthGoal;

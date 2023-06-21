@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import {Picker} from '@react-native-picker/picker';
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Modal, ScrollView } from 'react-native';
+import {View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Modal, ScrollView, FlatList} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const FoodDatabaseScreen = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [foodInfo, setFoodInfo] = useState(null);
   const [selectedFood, setSelectedFood] = useState(null);
-  const [quantity, setQuantity] = useState("");
-  const [selectedMeal, setSelectedMeal] = useState("Breakfast");
+  const [quantity, setQuantity] = useState('');
+  const [selectedMeal, setSelectedMeal] = useState('Breakfast');
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedDay, setSelectedDay] = useState('Monday');
   const [mealPlan, setMealPlan] = useState({
@@ -55,23 +56,20 @@ const FoodDatabaseScreen = () => {
     },
   });
 
-  //API Handler
-
   const handleSearch = () => {
     if (searchQuery) {
       // Récupération de l'api et écriture du code suivant la documentation sur le site de l'API
 
-      const apiKey = "BG41bGA7ErcRYvTHwfqpeA==KdAywloxAsSjgC9p";
-      const apiUrl =
-        `https://api.api-ninjas.com/v1/nutrition?query=` + searchQuery;
+      const apiKey = 'BG41bGA7ErcRYvTHwfqpeA==KdAywloxAsSjgC9p';
+      const apiUrl = `https://api.api-ninjas.com/v1/nutrition?query=` + searchQuery;
       const headers = {
-        "X-Api-Key": apiKey,
-        "Content-Type": "application/json",
+        'X-Api-Key': apiKey,
+        'Content-Type': 'application/json',
       };
 
-      fetch(apiUrl, { method: "GET", headers })
-        .then((response) => response.json())
-        .then((result) => {
+      fetch(apiUrl, { method: 'GET', headers })
+        .then(response => response.json())
+        .then(result => {
           console.log(result);
           if (result.length > 0) {
             setFoodInfo(result[0]); // On récupère les informations si la nourriture renseignée dans la zone de texte existe
@@ -80,19 +78,20 @@ const FoodDatabaseScreen = () => {
             console.log("Food not found");
           }
         })
-        .catch((error) => {
-          console.error("Error: ", error); // Gestion de l'erreur si la nourriture entrée dans le code n'est pas reconnue
+        .catch(error => {
+          console.error('Error: ', error); // Gestion de l'erreur si la nourriture entrée dans le code n'est pas reconnue
         });
     } else {
-      console.log("Please enter a search query");
+      console.log('Please enter a search query');
     }
   };
 
-  const handleFoodSelection = (food) => {
+  const handleFoodSelection = food => {
     // Le modal qui s'affiche lorsque on appuie sur la fenêtre montrant la nourriture et les apports caloriques
     setSelectedFood(food);
     setModalVisible(true);
   };
+
   const handleAddToMealPlan = () => {
 
     // Dans la fenêtre, on peut renseigner la quantité de la nourriture, le repas pour lequel cette nourriture est mangée et on a la possibilité de l'ajouté dans le meal plan
@@ -103,9 +102,19 @@ const FoodDatabaseScreen = () => {
     console.log('Meal Plan:', updatedMealPlan);
     setModalVisible(false);
   }
- };
+  };
+
+  // Fonction permettant de gérer la suppression des aliments dans le Meal Plan
+  const handleRemoveFood = (day, mealType, index) => {
+    const updatedMealPlan = { ...mealPlan }; // Crée une copie de l'objet Meal Plan avec un opérateur spread
+    updatedMealPlan[day][mealType].splice(index, 1); // Retire l'aliment du repas de la journée sélectionné avec la méthode splice
+    setMealPlan(updatedMealPlan);
+    console.log("After removing :", updatedMealPlan);
+};
+
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
+      {/* Zone de texte de la page et bouton pour rechercher dans l'API} */}
       <View style={styles.container}>
         <Text style={styles.heading}>Food Database</Text>
         <TextInput
@@ -127,6 +136,55 @@ const FoodDatabaseScreen = () => {
           </TouchableOpacity>
         )}
 
+        {/* Affichage du Meal Plan sur la fenêtre */}
+        <Text style={styles.heading}>Meal Plan</Text>
+        <FlatList
+          data={Object.entries(mealPlan)} // Iteration sur l'objet Meal Plan et conversion en un array de clé-valeurs
+          keyExtractor={(index) => index.toString()}
+          renderItem={({ item }) => ( // Rend chaque élément de la list
+            <View style={styles.mealPlanItem}>
+              <Text style={styles.mealPlanItemDay}>{item[0]}</Text> {/* Affiche le jour du Meal Plan */}
+              <View style={styles.mealPlanItemMealsContainer}>
+                {Object.entries(item[1]).map(([mealType, mealFoods]) => ( // Effectue une itération sur les repas de la journée
+                  <View key={mealType} style={styles.mealPlanItemMealContainer}>
+                    <Text style={styles.mealPlanItemMealType}>{mealType}</Text>
+                    <FlatList
+                      data={mealFoods}
+                      keyExtractor={(index) => index.toString()}
+                      renderItem={({ item, index }) => (
+                        <View style={styles.mealPlanItemFoodContainer}>
+                          <View style={styles.mealPlanItemFoodDetails}>
+                            <Text style={styles.mealPlanItemFood}>
+                              - {item.food.name} ({item.quantity}) {/* Ici, on affiche le nom de l'aliment et la quantité */}
+                            </Text>
+                          </View>
+                          <TouchableOpacity
+                            onPress={() => handleRemoveFood(item.day, mealType, index)} // Appelle la méthode handleRemoveFood losqu'on clique sur la croix rouge
+                            style={styles.removeIconContainer}
+                          >
+                            <Icon name="close-circle-outline" size={24} color="red" /> {/* Affichage de la croix rouge à côté de chaque aliment dans le Meal Plan*/}
+                          </TouchableOpacity>
+                        </View>
+                      )}
+                    />
+                  </View>
+                ))}
+              </View>
+            </View>
+          )}
+        />
+
+        {Object.entries(mealPlan).map(([day, meals]) => ( // Une autre itération sur l'objet Meal Plan
+          <View key={day} style={styles.dayTotalContainer}>
+            <Text style={styles.dayTotalLabel}>{day} Total Calories:</Text>
+            <Text style={styles.dayTotalValue}>
+            {meals.Breakfast.concat(meals.Lunch, meals.Snack, meals.Dinner)
+        .reduce((totalCalories, meal) => totalCalories + meal.food.calories * meal.quantity, 0).toFixed(2)} {/* Calcul et affiche les calories totaux par jour en arrondissant le nombre à deux chiffres après la virgule */}
+      kcal
+    </Text>
+  </View>
+))}
+
         {/* Modal qui devient visible en faisant une animation de slide et en rendant transparent le fond de l'application */}
         <Modal visible={modalVisible} animationType="slide" transparent={true}>
           <View style={styles.modalContainer}>
@@ -143,9 +201,9 @@ const FoodDatabaseScreen = () => {
               />
               <Text style={styles.modalLabel}>Meal Type :</Text>
 
-            {/* Le picker permettant de choisir pour quel repas on met la nourriture entrée dans le champ de texte */}
-            <Picker
-              style={styles.modalInput}
+             {/* Le picker permettant de choisir pour quel repas on met la nourriture entrée dans le champ de texte */}
+             <Picker
+               style={styles.modalInput}
                 selectedValue={selectedMeal}
                 onValueChange={itemValue => setSelectedMeal(itemValue)}
               >
@@ -160,6 +218,7 @@ const FoodDatabaseScreen = () => {
                 selectedValue={selectedDay}
                 onValueChange={itemValue => setSelectedDay(itemValue)}
               >
+                {/* Ce picker permet de préciser le jour pour lequel l'aliment est enregistré */}
                 <Picker.Item label="Monday" value="Monday" />
                 <Picker.Item label="Tuesday" value="Tuesday" />
                 <Picker.Item label="Wednesday" value="Wednesday" />
@@ -183,19 +242,17 @@ const FoodDatabaseScreen = () => {
   );
 };
 
-
 const styles = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,
     backgroundColor: '#f0fff0',
     paddingVertical: 20,
   },
-  container: {
+  container: { 
     flex: 1,
     padding: 20,
     backgroundColor: '#f0fff0',
   },
-  
   heading: {
     fontSize: 20,
     fontWeight: 'bold',
@@ -212,7 +269,6 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginBottom: 10,
   },
-  
   foodItem: {
     borderWidth: 1,
     borderColor: '#008000',
@@ -264,6 +320,52 @@ const styles = StyleSheet.create({
   buttonSpacing: {
     width: 10,
   },
+  mealPlanItem: {
+    marginBottom: 20,
+  },
+  mealPlanItemDay: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: '#008000',
+  },
+  mealPlanItemMealsContainer: {
+    marginLeft: 20,
+  },
+  mealPlanItemMealContainer: {
+    marginBottom: 10,
+  },
+  mealPlanItemMealType: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 5,
+    color: '#008000',
+  },
+  mealPlanItemFood: {
+    fontSize: 14,
+  },
+  removeIconContainer: {
+    marginLeft: 10,
+  },
+  mealPlanItemFoodContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 5,
+  },
+  dayTotalContainer: {
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  marginTop: 10,
+},
+dayTotalLabel: {
+  fontSize: 16,
+  fontWeight: 'bold',
+  color: '#008000',
+},
+dayTotalValue: {
+  fontSize: 16,
+},
 });
 
 export default FoodDatabaseScreen;
