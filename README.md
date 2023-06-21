@@ -1,11 +1,25 @@
-# Sample Snack app
+# Projet de développement mobile
 
-Open the `App.js` file to start writing some code. You can preview the changes directly on your phone or tablet by scanning the **QR code** or use the iOS or Android emulators. When you're done, click **Save** and share the link!
+Le projet demandé dans cette unité était de concevoir entièrement une application mobile permettant de planifier ses repas et de surveiller ses apports caloriques.
+Le cahier des charges peut être trouvé ici : https://react-native-course-esiee.netlify.app/blog/project
 
-When you're ready to see everything that Expo provides (or if you want to use your own editor) you can **Download** your project and use it with [expo-cli](https://docs.expo.dev/get-started/installation/#expo-cli)).
+# Mise en place
 
-All projects created in Snack are publicly available, so you can easily share the link to this project via link, or embed it on a web page with the `<>` button.
+L'application est développée en javascript en utilisant du React Native qui nous permet de produire des applications iOS, Androïd, Web avec une même base de code sans compromettre l’expérience utilisateur. Pour mettre en place tout ça, il faut :
 
-If you're having problems, you can tweet to us [@expo](https://twitter.com/expo) or ask in our [forums](https://forums.expo.dev/c/expo-dev-tools/61) or [Discord](https://chat.expo.dev/).
+Cloner le dépôt git : git clone https://github.com/oullaio/DevMobile.git
+Installer expo avec la commande npm install expo
+Installer Expo Go sur son téléphone
 
-Snack is Open Source. You can find the code on the [GitHub repo](https://github.com/expo/snack).
+Après avoir fait cela, utiliser la commande npx expo start qui va lancer l'application et afficher un QR Code qu'on peut scanner avec le téléphone pour faire fonctionner l'application. Le téléphone et l'ordinateur doivent partager le même réseau pour que cela fonctionne
+
+# Outils
+
+L'application a été faite avec React, Snack Expo et Visual Studio.
+Le langage utilisé pour l'application est le javascript.
+
+# Auteurs
+
+OULLAI Oussama @oullaio
+ZHANG Hugo @HugoHZhang
+KHALFAOUI Loqman @loqmanKhalfaoui
