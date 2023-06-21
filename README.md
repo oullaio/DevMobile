@@ -16,9 +16,9 @@ Après avoir fait cela, utiliser la commande `npx expo start` qui va lancer l'ap
 # Outils
 
 L'application a été faite avec :\
-[React](https://react-native-course-esiee.netlify.app/docs/Introduction/about-react-native) \
-[Snack Expo](https://snack.expo.dev) \
-[Visual Studio Code](https://visualstudio.microsoft.com/fr/) \
+- [React](https://react-native-course-esiee.netlify.app/docs/Introduction/about-react-native) - Bibliothèque JS \
+- [Snack Expo](https://snack.expo.dev) - Editeur en ligne d'Expo \
+- [Visual Studio Code](https://visualstudio.microsoft.com/fr/) - Editeur de code \
 Le langage utilisé pour l'application est le [javascript](https://react-native-course-esiee.netlify.app/docs/Introduction/about-javascript).
 
 # Auteurs
