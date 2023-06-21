@@ -11,7 +11,7 @@ Cloner le dépôt git : `git clone https://github.com/oullaio/DevMobile.git`\
 Installer expo avec la commande `npm install expo`\
 Installer Expo Go sur son téléphone
 
-Après avoir fait cela, utiliser la commande npx expo start qui va lancer l'application et afficher un QR Code qu'on peut scanner avec le téléphone pour faire fonctionner l'application. Le téléphone et l'ordinateur doivent partager le même réseau pour que cela fonctionne
+Après avoir fait cela, utiliser la commande `npx expo start` qui va lancer l'application et afficher un QR Code qu'on peut scanner avec le téléphone pour faire fonctionner l'application. Le téléphone et l'ordinateur doivent partager le même réseau pour que cela fonctionne
 
 # Outils
 
