@@ -15,11 +15,14 @@ Après avoir fait cela, utiliser la commande `npx expo start` qui va lancer l'ap
 
 # Outils
 
-L'application a été faite avec React, Snack Expo et Visual Studio.\
-Le langage utilisé pour l'application est le javascript.
+L'application a été faite avec :\
+[React] (https://react-native-course-esiee.netlify.app/docs/Introduction/about-react-native)\
+[Snack Expo] (https://snack.expo.dev) \
+[Visual Studio Code] (https://visualstudio.microsoft.com/fr/)\
+Le langage utilisé pour l'application est le [javascript] (https://react-native-course-esiee.netlify.app/docs/Introduction/about-javascript).
 
 # Auteurs
 
-OULLAI Oussama @oullaio\
-ZHANG Hugo @HugoHLZhang\
-KHALFAOUI Loqman @loqmanKhalfaoui
+OULLAI Oussama [@oullaio] (https://www.github.com/oullaio)\
+ZHANG Hugo [@HugoHLZhang] (https://www.github.com/HugoHLZhang)\
+KHALFAOUI Loqman [@loqmanKhalfaoui] (https://www.github.com/loqmanKhalfaoui)
