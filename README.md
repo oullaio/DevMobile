@@ -15,7 +15,7 @@ Après avoir fait cela, utiliser la commande `npx expo start` qui va lancer l'ap
 
 # Outils
 
-L'application a été faite avec :\
+L'application a été faite avec :
 
 - [React](https://react-native-course-esiee.netlify.app/docs/Introduction/about-react-native) - Bibliothèque JS\
 - [Snack Expo](https://snack.expo.dev) - Editeur en ligne d'Expo\
